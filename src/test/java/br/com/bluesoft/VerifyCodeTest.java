@@ -21,7 +21,6 @@ public class VerifyCodeTest {
 	@Before
 	public void setUp() {
 		simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("-3"));
 	}
 
 	@Test
