@@ -24,9 +24,6 @@ public class QRCodeGeneratorTest {
 	public void shouldGenerateQRCodeURL() throws Exception {
 		qrCodeGenerator = new QRCodeGenerator(USER_NAME, ACCOUNT, SECRET_KEY);
 		 byte[] qrCode = qrCodeGenerator.getQrCode();
-		 FileOutputStream fos = new FileOutputStream("/Users/mvlbarcelos/Documents/develop/workspace/bluesoft-mfa/qr.png");
-		 fos.write(qrCode);
-		 fos.close();
 		 assertThat(DigestUtils.md5Hex(qrCode), is("09f86277889768a49e960cbc924a229b"));
 	}
 	
