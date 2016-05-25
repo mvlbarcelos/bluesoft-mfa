@@ -3,6 +3,8 @@ package br.com.bluesoft;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.io.FileOutputStream;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Rule;
 import org.junit.Test;
