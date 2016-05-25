@@ -23,7 +23,7 @@ public class QRCodeGenerator {
 
 	private byte[] qrCode;
 
-	public QRCodeGenerator(String userName, String account, String secretKey) throws WriterException, IOException {
+	public QRCodeGenerator(final String userName, final String account, final String secretKey) throws WriterException, IOException {
 		this.userName = userName;
 		this.account = account;
 		this.secretKey = secretKey;
