@@ -5,6 +5,7 @@ import static org.junit.Assert.assertThat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,18 +14,19 @@ public class VerifyCodeTest {
 
 	private static final String VALID_SECRET_KEY = "EX5DUK2BV3DISAJO";
 	private static final String INVALID_SECRET_KEY = "JKJEOIDLKSDPODSI";
-	private static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd hh:mm:ss";
+	private static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd'T'HH:mm:ssz";
 
 	private SimpleDateFormat simpleDateFormat;
 
 	@Before
 	public void setUp() {
 		simpleDateFormat = new SimpleDateFormat(YYYY_MM_DD_HH_MM_SS);
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("-3"));
 	}
 
 	@Test
 	public void shoudCodeBeValid() throws ParseException {
-		long time = simpleDateFormat.parse("2016-05-24 21:00:00").getTime();
+		long time = simpleDateFormat.parse("2016-05-25T00:00:00UTC").getTime();
 		VerifyCode verifyCode = new VerifyCode(VALID_SECRET_KEY);
 		boolean verify = verifyCode.verify(880786, time);
 		assertThat(verify, is(true));
@@ -32,7 +34,7 @@ public class VerifyCodeTest {
 	
 	@Test
 	public void shoudCodeBeInvalid() throws ParseException {
-		long time = simpleDateFormat.parse("2016-05-24 21:00:00").getTime();
+		long time = simpleDateFormat.parse("2016-05-25T00:00:00UTC").getTime();
 		VerifyCode verifyCode = new VerifyCode(VALID_SECRET_KEY);
 		boolean verify = verifyCode.verify(880785, time);
 		assertThat(verify, is(false));
@@ -40,7 +42,7 @@ public class VerifyCodeTest {
 
 	@Test
 	public void shoudCodeBeInvalidForThisDate() throws ParseException {
-		long time = simpleDateFormat.parse("2016-05-24 21:01:00").getTime();
+		long time = simpleDateFormat.parse("2016-05-25T00:01:00UTC").getTime();
 		VerifyCode verifyCode = new VerifyCode(VALID_SECRET_KEY);
 		boolean verify = verifyCode.verify(880786, time);
 		assertThat(verify, is(false));
@@ -48,7 +50,7 @@ public class VerifyCodeTest {
 
 	@Test
 	public void shoudCodeBeInvalidForThisSecret() throws ParseException {
-		long time = simpleDateFormat.parse("2016-05-24 21:00:00").getTime();
+		long time = simpleDateFormat.parse("2016-05-25T00:00:00UTC").getTime();
 		VerifyCode verifyCode = new VerifyCode(INVALID_SECRET_KEY);
 		boolean verify = verifyCode.verify(880785, time);
 		assertThat(verify, is(false));
